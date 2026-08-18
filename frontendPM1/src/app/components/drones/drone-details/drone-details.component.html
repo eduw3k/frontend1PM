@@ -1,0 +1,55 @@
+<div class="container mt-4">
+
+  <h2 class="mb-4">
+    {{ editando ? 'Editar Drone' : 'Novo Drone' }}
+  </h2>
+
+  <form>
+
+    <div class="mb-3">
+
+      <label class="form-label">
+        Marca
+      </label>
+
+      <input
+        type="text"
+        class="form-control"
+        name="marca"
+        [(ngModel)]="drone.marca">
+
+    </div>
+
+    <div class="mb-3">
+
+      <label class="form-label">
+        Modelo
+      </label>
+
+      <input
+        type="text"
+        class="form-control"
+        name="modelo"
+        [(ngModel)]="drone.modelo">
+
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary me-2"
+      mdbRipple
+      (click)="salvar()">
+      Salvar
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-secondary"
+      mdbRipple
+      (click)="cancelar()">
+      Cancelar
+    </button>
+
+  </form>
+
+</div>

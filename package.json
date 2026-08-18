@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@angular/router": "^19.2.25",
+    "mdb-angular-ui-kit": "^8.0.0"
+  }
+}

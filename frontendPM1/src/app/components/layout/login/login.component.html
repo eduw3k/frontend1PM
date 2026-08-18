@@ -1,0 +1,63 @@
+<div class="container mt-5">
+
+  <div class="row justify-content-center">
+
+    <div class="col-md-5">
+
+      <h2 class="text-center mb-4">
+        T4 Drones
+      </h2>
+
+      <div class="card p-4">
+
+        <h4 class="mb-4">
+          Login
+        </h4>
+
+        <form>
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Usuário
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="usuario"
+              [(ngModel)]="usuario">
+
+          </div>
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Senha
+            </label>
+
+            <input
+              type="password"
+              class="form-control"
+              name="senha"
+              [(ngModel)]="senha">
+
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-primary w-100"
+            mdbRipple
+            (click)="entrar()">
+            Entrar
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
