@@ -1,0 +1,134 @@
+$navbar-bg: #8c7662; // Cor marrom de fundo do seu Figma
+
+input {
+  background-color: #ffffff;
+  border: none;
+  padding-right: 35px;
+  height: 38px;
+  
+  // Esconde o "X" nativo no Chrome, Edge e Safari
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration {
+    display: none;
+    -webkit-appearance: none;
+  }
+
+  // Esconde o "X" nativo no antigo Internet Explorer / Edge legado
+  &::-ms-clear,
+  &::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+  }
+}
+
+.custom-navbar {
+  background-color: $navbar-bg !important;
+  // Padding oficial do Figma: 24px cima/baixo e 64px lados
+  padding: 24px 64px !important; 
+  width: 100%;
+
+  .navbar-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1280px; // Largura exata do seu frame Desktop no Figma
+    margin: 0 auto;
+  }
+
+  // Primeira Linha do Design
+  .navbar-top-row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 34px; // Gap especificado no seu Auto Layout
+  }
+
+  // Configuração da barra de busca
+  .search-form {
+    flex-grow: 1;
+    max-width: 400px;
+
+    .search-input-wrapper {
+      position: relative;
+      width: 100%;
+
+      input {
+        background-color: #ffffff;
+        border: none;
+        padding-right: 35px;
+        height: 38px;
+        
+        &:focus {
+          box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+        }
+      }
+
+      .clear-btn {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #999;
+        cursor: pointer;
+      }
+    }
+  }
+
+  // Links do Perfil à direita
+  .user-links {
+    display: flex;
+    gap: 24px;
+    
+    .nav-link {
+      font-size: 14px;
+      padding: 0;
+      text-decoration: none;
+    }
+  }
+
+  // Segunda Linha do Design (Menu de Categorias)
+  .navbar-bottom-row {
+    width: 100%;
+    margin-top: 20px; // Espaço vertical entre as duas linhas de conteúdo
+    display: flex;
+    justify-content: center;
+
+    // Elemento com o preenchimento de 5% solicitado do Figma
+    .categories-bg-wrapper {
+      background-color: rgba(0, 0, 0, 0.05); // Preto com 5% de opacidade
+      border-radius: 20px;                   // Formato pílula ao redor dos itens
+      padding: 8px 24px;                     // Margem interna para os links respirarem
+    }
+
+    .categories-nav {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      gap: 32px; // Espaçamento entre os links inferiores
+
+      .nav-link {
+        padding: 4px 8px;
+        text-decoration: none;
+        opacity: 0.8;
+        font-size: 15px;
+        transition: all 0.2s ease;
+
+        &:hover, &.active {
+          opacity: 1;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
