@@ -1,0 +1,66 @@
+<div class="container mt-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2>T4 Drones - Produtos</h2>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      mdbRipple
+      (click)="novo()">
+      Novo Drone
+    </button>
+
+  </div>
+
+  <table class="table table-striped table-hover">
+
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      @for (drone of drones; track drone.id) {
+
+        <tr>
+
+          <td>{{ drone.id }}</td>
+          <td>{{ drone.marca }}</td>
+          <td>{{ drone.modelo }}</td>
+
+          <td>
+
+            <button
+              type="button"
+              class="btn btn-warning btn-sm me-2"
+              mdbRipple
+              (click)="editar(drone.id)">
+              Editar
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              mdbRipple
+              (click)="excluir(drone.id)">
+              Excluir
+            </button>
+
+          </td>
+
+        </tr>
+
+      }
+
+    </tbody>
+
+  </table>
+
+</div>
