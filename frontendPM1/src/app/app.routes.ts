@@ -2,9 +2,8 @@ import { Routes } from '@angular/router';
 
 import { LoginComponent } from './components/layout/login/login.component';
 import { PrincipalComponent } from './components/layout/principal/principal.component';
-
-import { DroneListComponent } from './components/drones/drone-list/drone-list.component';
-import { DroneDetailsComponent } from './components/drones/drone-details/drone-details.component';
+import { Produtos } from './components/produtos/produtos';
+import { ProdutoDetailsComponent } from './components/produto/produto-details/produto-details.component';
 
 export const routes: Routes = [
 
@@ -25,18 +24,13 @@ export const routes: Routes = [
     children: [
 
       {
-        path: 'drones',
-        component: DroneListComponent
+        path: 'produtos',
+        component: Produtos
       },
 
       {
-        path: 'drones/novo',
-        component: DroneDetailsComponent
-      },
-
-      {
-        path: 'drones/editar/:id',
-        component: DroneDetailsComponent
+        path: 'produtos/:id',
+        component: ProdutoDetailsComponent
       }
 
     ]
