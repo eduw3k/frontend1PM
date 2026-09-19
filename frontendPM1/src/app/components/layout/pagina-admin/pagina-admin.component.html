@@ -1,0 +1,291 @@
+<div class="container mt-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2>Área do Administrador</h2>
+      <p>Gerenciamento de produtos</p>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="abrirModalAdicionar()">
+      Adicionar Produto
+    </button>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Produto</th>
+          <th>Categoria</th>
+          <th>Preço</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (produto of produtos; track produto.id) {
+          <tr>
+            <td>{{ produto.id }}</td>
+            <td>{{ produto.nome }}</td>
+            <td>{{ produto.categoria }}</td>
+            <td>R$ {{ produto.preco.toFixed(2) }}</td>
+
+            <td>
+              <button
+                type="button"
+                class="btn btn-sm btn-primary me-2"
+                (click)="editarProduto(produto)">
+                Editar
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-sm btn-danger"
+                (click)="excluirProduto(produto.id)">
+                Excluir
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+
+    </table>
+  </div>
+
+  @if (mostrarModal && produtoSelecionado) {
+
+    <div class="modal-fundo">
+
+      <div class="modal-caixa">
+
+        <div class="modal-cabecalho">
+          <h4>Editar Produto</h4>
+
+          <button
+            type="button"
+            class="btn-fechar"
+            (click)="cancelarEdicao()">
+            &times;
+          </button>
+        </div>
+
+        <div class="modal-corpo">
+
+          <div class="mb-3">
+            <label class="form-label">Nome</label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="nome"
+              [(ngModel)]="produtoSelecionado.nome">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Descrição</label>
+
+            <textarea
+              class="form-control"
+              name="descricao"
+              [(ngModel)]="produtoSelecionado.descricao">
+            </textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Preço</label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="preco"
+              [(ngModel)]="produtoSelecionado.preco">
+          </div>
+
+        </div>
+
+        <div class="modal-rodape">
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="cancelarEdicao()">
+            Cancelar
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-success"
+            (click)="salvarEdicao()">
+            Salvar
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+  @if (mostrarModalAdicionar) {
+
+    <div class="modal-fundo">
+
+      <div class="modal-caixa">
+
+        <div class="modal-cabecalho">
+          <h4>Adicionar Produto</h4>
+
+          <button
+            type="button"
+            class="btn-fechar"
+            (click)="cancelarAdicao()">
+            &times;
+          </button>
+        </div>
+
+        <div class="modal-corpo">
+
+          <div class="mb-3">
+            <label class="form-label">Nome</label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="novoNome"
+              [(ngModel)]="novoProduto.nome">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Descrição</label>
+
+            <textarea
+              class="form-control"
+              name="novaDescricao"
+              [(ngModel)]="novoProduto.descricao">
+            </textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Altura</label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="altura"
+              [(ngModel)]="novoProduto.altura">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Largura</label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="largura"
+              [(ngModel)]="novoProduto.largura">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Diâmetro</label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="diametro"
+              [(ngModel)]="novoProduto.diametro">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Circunferência</label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="circunferencia"
+              [(ngModel)]="novoProduto.circunferencia">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Peso aproximado</label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="pesoaprox"
+              [(ngModel)]="novoProduto.pesoaprox">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Categoria</label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="categoria"
+              [(ngModel)]="novoProduto.categoria">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Subcategoria</label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="subcategoria"
+              [(ngModel)]="novoProduto.subcategoria">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Preço</label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="novoPreco"
+              [(ngModel)]="novoProduto.preco">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Imagem</label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="imagem"
+              [(ngModel)]="novoProduto.imagem"
+              placeholder="Ex: assets/caneca.png">
+          </div>
+
+        </div>
+
+        <div class="modal-rodape">
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="cancelarAdicao()">
+            Cancelar
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-success"
+            (click)="adicionarProduto()">
+            Adicionar
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>
