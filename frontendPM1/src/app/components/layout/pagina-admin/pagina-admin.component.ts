@@ -40,11 +40,25 @@ export class PaginaAdmin implements OnInit {
   }
 
   listarProdutos(): void {
-    this.produtos = this.produtoService.listar();
+    this.produtoService.listar().subscribe({
+      next: (produtos) => {
+        this.produtos = produtos;
+      },
+      error: (erro) => {
+        console.error('Erro ao listar produtos:', erro);
+
+        Swal.fire({
+          title: 'Erro!',
+          text: 'Não foi possível carregar os produtos.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    });
   }
 
   editarProduto(produto: Produtos): void {
-    this.produtoSelecionado = produto;
+    this.produtoSelecionado = { ...produto };
     this.mostrarModal = true;
   }
 
@@ -59,14 +73,27 @@ export class PaginaAdmin implements OnInit {
       confirmButtonColor: '#d33'
     }).then((resultado) => {
       if (resultado.isConfirmed) {
-        this.produtoService.excluir(id);
-        this.listarProdutos();
+        this.produtoService.excluir(id).subscribe({
+          next: () => {
+            this.listarProdutos();
 
-        Swal.fire({
-          title: 'Excluído!',
-          text: 'O produto foi excluído com sucesso.',
-          icon: 'success',
-          confirmButtonText: 'OK'
+            Swal.fire({
+              title: 'Excluído!',
+              text: 'O produto foi excluído com sucesso.',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            });
+          },
+          error: (erro) => {
+            console.error('Erro ao excluir produto:', erro);
+
+            Swal.fire({
+              title: 'Erro!',
+              text: 'Não foi possível excluir o produto.',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
         });
       }
     });
@@ -96,15 +123,28 @@ export class PaginaAdmin implements OnInit {
   }
 
   adicionarProduto(): void {
-    this.produtoService.criar(this.novoProduto);
-    this.listarProdutos();
-    this.mostrarModalAdicionar = false;
+    this.produtoService.criar(this.novoProduto).subscribe({
+      next: () => {
+        this.listarProdutos();
+        this.mostrarModalAdicionar = false;
 
-    Swal.fire({
-      title: 'Produto adicionado!',
-      text: 'O produto foi cadastrado com sucesso.',
-      icon: 'success',
-      confirmButtonText: 'OK'
+        Swal.fire({
+          title: 'Produto adicionado!',
+          text: 'O produto foi cadastrado com sucesso.',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+      },
+      error: (erro) => {
+        console.error('Erro ao adicionar produto:', erro);
+
+        Swal.fire({
+          title: 'Erro!',
+          text: 'Não foi possível cadastrar o produto.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
     });
   }
 
@@ -115,10 +155,30 @@ export class PaginaAdmin implements OnInit {
 
   salvarEdicao(): void {
     if (this.produtoSelecionado) {
-      this.produtoService.editar(this.produtoSelecionado);
-      this.listarProdutos();
-      this.produtoSelecionado = null;
-      this.mostrarModal = false;
+      this.produtoService.editar(this.produtoSelecionado).subscribe({
+        next: () => {
+          this.listarProdutos();
+          this.produtoSelecionado = null;
+          this.mostrarModal = false;
+
+          Swal.fire({
+            title: 'Produto atualizado!',
+            text: 'O produto foi atualizado com sucesso.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+        },
+        error: (erro) => {
+          console.error('Erro ao editar produto:', erro);
+
+          Swal.fire({
+            title: 'Erro!',
+            text: 'Não foi possível atualizar o produto.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
+      });
     }
   }
 }

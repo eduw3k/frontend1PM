@@ -38,17 +38,17 @@ export class ProdutoDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     const id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
-
-      const produtoEncontrado =
-        this.produtoService.buscarPorId(Number(id));
-
-      if (produtoEncontrado) {
-        this.produto = produtoEncontrado;
-      }
+      this.produtoService.buscarPorId(Number(id)).subscribe({
+        next: (produtoEncontrado) => {
+          this.produto = produtoEncontrado;
+        },
+        error: (erro) => {
+          console.error('Erro ao buscar produto:', erro);
+        }
+      });
     }
   }
 

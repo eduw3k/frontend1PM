@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, catchError, throwError, map } from 'rxjs';
 import { Produtos } from '../models/produtos';
 
 @Injectable({
@@ -6,93 +8,97 @@ import { Produtos } from '../models/produtos';
 })
 export class ProdutoService {
 
- private produtos: Produtos[] = [
-  new Produtos(
-    1,
-    'Caneca Personalizável 230ml',
-    'Caneca personalizável para presentes e ocasiões especiais.',
-    10,
-    8,
-    8,
-    25,
-    300,
-    1,
-    1,
-    25.00,
-    'assets/caneca.png'
-  ),
+  private apiUrl = 'http://localhost:8081/produtos';
 
-  new Produtos(
-    2,
-    'Camiseta Personalizável',
-    'Camiseta personalizável para deixar seu estilo do seu jeito.',
-    70,
-    50,
-    0,
-    0,
-    200,
-    1,
-    1,
-    45.00,
-    'assets/camiseta.png'
-  ),
+  constructor(private http: HttpClient) {}
 
-  new Produtos(
-    3,
-    'Chaveiro Personalizável',
-    'Chaveiro personalizado para presentes e lembranças.',
-    5,
-    3,
-    2,
-    10,
-    30,
-    1,
-    1,
-    15.00,
-    'assets/chaveiro.png'
-  ),
-
-  new Produtos(
-    4,
-    'Cesta Personalizável',
-    'Cesta personalizada para presentes e datas especiais.',
-    30,
-    25,
-    20,
-    80,
-    1000,
-    1,
-    1,
-    80.00,
-    'assets/cesta.png'
-  )
-];
-
-  listar(): Produtos[] {
-    return this.produtos;
+  listar(): Observable<Produtos[]> {
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      map(produtos => produtos.map(produto => this.converterProduto(produto))),
+      catchError(this.tratarErro)
+    );
   }
 
-  criar(produto: Produtos): void {
-    produto.id = this.produtos.length > 0
-      ? Math.max(...this.produtos.map(p => p.id)) + 1
-      : 1;
-
-    this.produtos.push(produto);
+  buscarPorId(id: number): Observable<Produtos> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
+      map(produto => this.converterProduto(produto)),
+      catchError(this.tratarErro)
+    );
   }
 
-  editar(produto: Produtos): void {
-    const index = this.produtos.findIndex(p => p.id === produto.id);
+  criar(produto: Produtos): Observable<Produtos> {
+    const produtoRequest = {
+      nome: produto.nome,
+      descricao: produto.descricao,
+      preco: produto.preco,
+      quantidade: 1,
+      altura: produto.altura,
+      largura: produto.largura,
+      diametro: produto.diametro,
+      circunferencia: produto.circunferencia,
+      pesoAprox: produto.pesoaprox,
+      imagemPrincipal: produto.imagem,
+      ativo: true,
+      destaque: false,
+      categoriaId: produto.categoria,
+      subcategoriaId: produto.subcategoria
+    };
 
-    if (index !== -1) {
-      this.produtos[index] = produto;
-    }
+    return this.http.post<any>(this.apiUrl, produtoRequest).pipe(
+      map(produtoCriado => this.converterProduto(produtoCriado)),
+      catchError(this.tratarErro)
+    );
   }
 
-  excluir(id: number): void {
-    this.produtos = this.produtos.filter(p => p.id !== id);
+  editar(produto: Produtos): Observable<Produtos> {
+    const produtoRequest = {
+      nome: produto.nome,
+      descricao: produto.descricao,
+      preco: produto.preco,
+      quantidade: 1,
+      altura: produto.altura,
+      largura: produto.largura,
+      diametro: produto.diametro,
+      circunferencia: produto.circunferencia,
+      pesoAprox: produto.pesoaprox,
+      imagemPrincipal: produto.imagem,
+      ativo: true,
+      destaque: false,
+      categoriaId: produto.categoria,
+      subcategoriaId: produto.subcategoria
+    };
+
+    return this.http.put<any>(`${this.apiUrl}/${produto.id}`, produtoRequest).pipe(
+      map(produtoAtualizado => this.converterProduto(produtoAtualizado)),
+      catchError(this.tratarErro)
+    );
   }
 
-  buscarPorId(id: number): Produtos | undefined {
-    return this.produtos.find(p => p.id === id);
+  excluir(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+      catchError(this.tratarErro)
+    );
+  }
+
+  private converterProduto(produto: any): Produtos {
+    return new Produtos(
+      produto.id,
+      produto.nome,
+      produto.descricao,
+      produto.altura,
+      produto.largura,
+      produto.diametro,
+      produto.circunferencia,
+      produto.pesoAprox,
+      produto.categoriaId,
+      produto.subcategoriaId,
+      produto.preco,
+      produto.imagemPrincipal
+    );
+  }
+
+  private tratarErro(erro: any) {
+    console.error('Erro na API de produtos:', erro);
+    return throwError(() => erro);
   }
 }

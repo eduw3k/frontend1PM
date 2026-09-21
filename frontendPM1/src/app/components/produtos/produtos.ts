@@ -25,7 +25,14 @@ export class Produtos implements OnInit {
   }
 
   listar(): void {
-    this.produtos = this.produtoService.listar();
+    this.produtoService.listar().subscribe({
+      next: (produtos) => {
+        this.produtos = produtos;
+      },
+      error: (erro) => {
+        console.error('Erro ao listar produtos:', erro);
+      }
+    });
   }
 
   verProduto(id: number): void {
