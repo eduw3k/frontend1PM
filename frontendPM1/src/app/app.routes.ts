@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './components/layout/login/login.component';
 import { PrincipalComponent } from './components/layout/principal/principal.component';
 import { Produtos } from './components/produtos/produtos';
+import { PaginaCategoriasComponent } from './components/layout/pagina-categorias/pagina-categorias.component';
 import { ProdutoDetailsComponent } from './components/produto/produto-details/produto-details.component';
 import { PaginaAdmin } from './components/layout/pagina-admin/pagina-admin.component';
 
@@ -34,15 +35,24 @@ export const routes: Routes = [
         component: ProdutoDetailsComponent
       },
       {
+        path: 'produtos/categoria/:categoriaId',
+        component: PaginaCategoriasComponent
+      },
+
+      {
+        path: 'produtos/subcategoria/:subcategoriaId',
+        component: PaginaCategoriasComponent
+      },
+      {
         path: 'admin',
         component: PaginaAdmin
       }
     ]
   },
 
-  {
-    path: '**',
-    redirectTo: 'login'
-  }
+  // {
+  //   path: '**',
+  //   redirectTo: 'login'
+  // }
 
 ];

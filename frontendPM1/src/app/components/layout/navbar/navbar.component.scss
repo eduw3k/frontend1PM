@@ -230,3 +230,54 @@ input {
     }
   }
 }
+
+.account-dropdown {
+  position: relative;
+}
+
+.account-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.account-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+
+  min-width: 200px;
+
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+  display: none;
+  z-index: 1000;
+}
+
+.account-dropdown:hover .account-menu {
+  display: block;
+}
+
+.account-menu a,
+.account-menu button {
+  display: block;
+  width: 100%;
+
+  padding: 12px 16px;
+
+  border: none;
+  background: none;
+
+  text-decoration: none;
+  text-align: left;
+
+  color: #333;
+  cursor: pointer;
+}
+
+.account-menu a:hover,
+.account-menu button:hover {
+  background-color: #f2f2f2;
+}

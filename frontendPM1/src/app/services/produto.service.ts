@@ -107,4 +107,16 @@ export class ProdutoService {
     console.error('Erro na API de produtos:', erro);
     return throwError(() => erro);
   }
+
+  listarPorCategoria(id: number): Observable<Produtos[]> {
+  return this.http.get<Produtos[]>(
+    `${this.apiUrl}/categoria/${id}`
+  );
+}
+
+listarPorSubcategoria(id: number): Observable<Produtos[]> {
+  return this.http.get<Produtos[]>(
+    `${this.apiUrl}/subcategoria/${id}`
+  );
+}
 }

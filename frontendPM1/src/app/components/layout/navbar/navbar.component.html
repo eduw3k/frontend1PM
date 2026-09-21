@@ -29,7 +29,22 @@
       <div class="user-links">
         <a href="#" class="nav-link text-white">Visto</a>
         <a href="#" class="nav-link text-white">Carrinho</a>
-        <a href="#" class="nav-link text-white">Conta</a>
+
+        <div class="account-dropdown">
+          <button type="button" class="nav-link text-white account-button">
+            Conta
+          </button>
+
+          <div class="account-menu">
+            <a routerLink="/admin">
+              Área do administrador
+            </a>
+
+            <button type="button" (click)="sair()">
+              Sair
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -56,20 +71,20 @@
 
                   <div class="dropdown-column">
 
-                    <h4 class="column-title">
+                    <a class="column-title active" [routerLink]="['/produtos/categoria', categoria.id]">
                       {{ categoria.nome }}
-                    </h4>
+                    </a>
 
                     <ul class="subcategories-list">
 
                       @for (
-                        subcategoria of categoria.subcategorias;
+                        subcategoria of getSubcategorias(categoria.id);
                         track subcategoria.id
                       ) {
 
                         <li>
                           <!-- ----------------------NESCESSARIO IMPLEMENTAR---------------------- -->
-                          <a href="#"> 
+                          <a class="nav-link active" [routerLink]="['/produtos/subcategoria', subcategoria.id]"> 
                             {{ subcategoria.nome }}
                           </a>
                         </li>

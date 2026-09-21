@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
+import { Categoria } from '../../../models/categoria';
+import { Subcategoria } from '../../../models/subcategoria';
+import { CategoriaService } from '../../../services/categoria.service';
+import { SubcategoriaService } from '../../../services/subcategoria.service';
+
 import { Produtos } from '../../../models/produtos';
 import { ProdutoService } from '../../../services/produto.service';
 import Swal from 'sweetalert2';
@@ -14,6 +20,10 @@ import Swal from 'sweetalert2';
 export class PaginaAdmin implements OnInit {
   produtos: Produtos[] = [];
   produtoSelecionado: Produtos | null = null;
+
+  categorias: Categoria[] = [];
+  subcategorias: Subcategoria[] = [];
+  subcategoriasFiltradas: Subcategoria[] = [];
 
   novoProduto: Produtos = new Produtos(
     0,
@@ -33,10 +43,16 @@ export class PaginaAdmin implements OnInit {
   mostrarModal = false;
   mostrarModalAdicionar = false;
 
-  constructor(private produtoService: ProdutoService) {}
+  constructor(
+    private produtoService: ProdutoService,
+    private categoriaService: CategoriaService,
+    private subcategoriaService: SubcategoriaService
+  ) {}
 
   ngOnInit(): void {
     this.listarProdutos();
+    this.carregarCategorias();
+    this.carregarSubcategorias();
   }
 
   listarProdutos(): void {
@@ -181,4 +197,41 @@ export class PaginaAdmin implements OnInit {
       });
     }
   }
+
+  carregarCategorias(): void {
+  this.categoriaService.listar().subscribe({
+    next: (categorias) => {
+      this.categorias = categorias;
+    },
+    error: (erro) => {
+      console.error('Erro ao carregar categorias:', erro);
+    }
+  });
+}
+carregarSubcategorias(): void {
+  this.subcategoriaService.listar().subscribe({
+    next: (subcategorias) => {
+      this.subcategorias = subcategorias;
+    },
+    error: (erro) => {
+      console.error('Erro ao carregar subcategorias:', erro);
+    }
+  });
+}
+
+filtrarSubcategorias(): void {
+
+   if (!this.novoProduto.categoria) {
+    this.subcategoriasFiltradas = [];
+    this.novoProduto.subcategoria = null;
+    return;
+  }
+
+  this.subcategoriasFiltradas = this.subcategorias.filter(
+    subcategoria =>
+      subcategoria.categoriaId === this.novoProduto.categoria
+  );
+
+  this.novoProduto.subcategoria = null;
+}
 }

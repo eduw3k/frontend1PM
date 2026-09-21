@@ -8,8 +8,8 @@ export class Produtos {
     circunferencia!: number;
     pesoaprox!: number;
     // cores: string[] = []; n consegui pensar em como fazer, cores ja pré-definidas.
-    categoria!: number;
-    subcategoria!: number;
+    categoria!: number | null;
+    subcategoria!: number | null;
     preco!: number;
     imagem!: string;
 

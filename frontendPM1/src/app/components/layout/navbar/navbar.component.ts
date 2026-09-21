@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { CategoriaService } from '../../../services/categoria.service';
 import { Categoria } from '../../../models/categoria';
@@ -9,7 +10,7 @@ import { SubcategoriaService } from '../../../services/subcategoria.service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [MdbCollapseModule, FormsModule],
+  imports: [MdbCollapseModule, FormsModule, RouterLink],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -51,6 +52,12 @@ export class NavbarComponent {
     });
   }
 
+   getSubcategorias(categoriaId: number): Subcategoria[] {
+    return this.subcategorias.filter(
+      subcategoria => subcategoria.categoriaId === categoriaId
+    );
+  }
+
   pesquisar(): void {
     if (this.busca.trim()) {
       this.router.navigate(['/produtos'], {
@@ -64,5 +71,9 @@ export class NavbarComponent {
   limparBusca(): void {
     this.busca = '';
     this.router.navigate(['/produtos']);
+  }
+
+  sair(): void {
+    this.router.navigate(['/login']);
   }
 }

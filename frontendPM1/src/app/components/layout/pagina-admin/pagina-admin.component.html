@@ -224,21 +224,47 @@
           <div class="mb-3">
             <label class="form-label">Categoria</label>
 
-            <input
-              type="number"
-              class="form-control"
-              name="categoria"
-              [(ngModel)]="novoProduto.categoria">
+             <select
+                class="form-select"
+                name="categoria"
+                [(ngModel)]="novoProduto.categoria"
+                (ngModelChange)="filtrarSubcategorias()">
+
+                <option [ngValue]="null">
+                  Selecione uma categoria
+                </option>
+
+                @for (categoria of categorias; track categoria.id) {
+                  <option [ngValue]="categoria.id">
+                    {{ categoria.nome }}
+                  </option>
+                }
+
+              </select>
           </div>
 
           <div class="mb-3">
             <label class="form-label">Subcategoria</label>
 
-            <input
-              type="number"
-              class="form-control"
+             <select
+              class="form-select"
               name="subcategoria"
               [(ngModel)]="novoProduto.subcategoria">
+
+              <option [ngValue]="null">
+                Selecione uma subcategoria
+              </option>
+
+              @for (
+                subcategoria of subcategoriasFiltradas;
+                track subcategoria.id
+              ) {
+                <option [ngValue]="subcategoria.id">
+                  {{ subcategoria.nome }}
+                </option>
+              }
+
+            </select>
           </div>
 
           <div class="mb-3">
