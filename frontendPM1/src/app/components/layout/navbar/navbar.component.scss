@@ -28,6 +28,104 @@ input {
   }
 }
 
+.categories-nav {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 32px;
+
+  .nav-item {
+    position: relative; // Garante que a caixa se posicione alinhada a este item
+
+    .nav-link {
+      padding: 4px 8px;
+      text-decoration: none;
+      opacity: 0.8;
+      font-size: 15px;
+      transition: all 0.2s ease;
+
+      &:hover, &.active {
+        opacity: 1;
+        font-weight: 500;
+      }
+    }
+
+    // --- COMPORTAMENTO DO DROPDOWN ---
+
+    // Oculto por padrão
+    .dropdown-menu-box {
+      display: block;
+      position: absolute;
+      top: 100%; // Aparece logo abaixo do link
+      left: 50%;
+      transform: translateX(-50%) translateY(10px); // Centraliza a caixa e joga um pouco para baixo
+      background-color: #ffffff;
+      min-width: 500px; // Largura da caixa de subcategorias
+      box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); // Sombra elegante para dar profundidade
+      border-radius: 8px;
+      padding: 20px;
+      z-index: 1000;
+
+      // Efeito de transição suave (Fade)
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    }
+
+    // Quando passa o mouse por cima do item, exibe a caixa
+    &:hover {
+      .dropdown-menu-box {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0); // Move suavemente para a posição final
+      }
+    }
+  }
+
+  // Estilização interna das colunas de categorias
+  .dropdown-container {
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+  }
+
+  .dropdown-column {
+    flex: 1;
+
+    .column-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #333333;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #eeeeee;
+      padding-bottom: 4px;
+    }
+
+    .subcategories-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin-bottom: 8px;
+
+        a {
+          font-size: 13px;
+          color: #666666;
+          text-decoration: none;
+          transition: color 0.2s ease;
+
+          &:hover {
+            color: #8c7662; // Muda para a cor marrom do seu tema no hover
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
+
 .custom-navbar {
   background-color: $navbar-bg !important;
   // Padding oficial do Figma: 24px cima/baixo e 64px lados

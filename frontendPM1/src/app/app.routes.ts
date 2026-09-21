@@ -8,11 +8,11 @@ import { PaginaAdmin } from './components/layout/pagina-admin/pagina-admin.compo
 
 export const routes: Routes = [
 
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
+  // {
+  //   path: '',
+  //   redirectTo: 'login',
+  //   pathMatch: 'full'
+  // },
 
   {
     path: 'login',
@@ -42,9 +42,9 @@ export const routes: Routes = [
     ]
   },
 
-  {
-    path: '**',
-    redirectTo: 'login'
-  }
+  // {
+  //   path: '**',
+  //   redirectTo: 'login'
+  // }
 
 ];
