@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 import { Produtos } from '../../../models/produtos';
 import { ProdutoService } from '../../../services/produto.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-produto-details',
@@ -13,7 +14,6 @@ import { ProdutoService } from '../../../services/produto.service';
   styleUrl: './produto-details.component.scss'
 })
 export class ProdutoDetailsComponent implements OnInit {
-
   produto: Produtos = new Produtos(
     0,
     '',
@@ -47,17 +47,33 @@ export class ProdutoDetailsComponent implements OnInit {
         },
         error: (erro) => {
           console.error('Erro ao buscar produto:', erro);
+          Swal.fire({
+            title: 'Erro!',
+            text: 'Não foi possível carregar o produto.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
         }
       });
     }
   }
 
   comprar(): void {
-    alert('Produto adicionado para compra!');
+    Swal.fire({
+      title: 'Compra',
+      text: 'Produto selecionado para compra!',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    });
   }
 
   adicionarCarrinho(): void {
-    alert('Produto adicionado ao carrinho!');
+    Swal.fire({
+      title: 'Carrinho',
+      text: 'Produto adicionado ao carrinho!',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    });
   }
 
   voltar(): void {
