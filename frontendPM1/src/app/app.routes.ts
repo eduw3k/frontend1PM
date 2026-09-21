@@ -2,17 +2,17 @@ import { Routes } from '@angular/router';
 
 import { LoginComponent } from './components/layout/login/login.component';
 import { PrincipalComponent } from './components/layout/principal/principal.component';
-
-import { DroneListComponent } from './components/drones/drone-list/drone-list.component';
-import { DroneDetailsComponent } from './components/drones/drone-details/drone-details.component';
+import { Produtos } from './components/produtos/produtos';
+import { ProdutoDetailsComponent } from './components/produto/produto-details/produto-details.component';
+import { PaginaAdmin } from './components/layout/pagina-admin/pagina-admin.component';
 
 export const routes: Routes = [
 
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
+  // {
+  //   path: '',
+  //   redirectTo: 'login',
+  //   pathMatch: 'full'
+  // },
 
   {
     path: 'login',
@@ -25,26 +25,26 @@ export const routes: Routes = [
     children: [
 
       {
-        path: 'drones',
-        component: DroneListComponent
+        path: 'produtos',
+        component: Produtos
       },
 
       {
-        path: 'drones/novo',
-        component: DroneDetailsComponent
+        path: 'produtos/:id',
+        component: ProdutoDetailsComponent
       },
 
       {
-        path: 'drones/editar/:id',
-        component: DroneDetailsComponent
+        path: 'admin',
+        component: PaginaAdmin
       }
 
     ]
   },
 
-  {
-    path: '**',
-    redirectTo: 'login'
-  }
+  // {
+  //   path: '**',
+  //   redirectTo: 'login'
+  // }
 
 ];

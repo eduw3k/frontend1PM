@@ -18,6 +18,6 @@ export class LoginComponent {
   constructor(private router: Router) {}
 
   entrar(): void {
-    this.router.navigate(['/drones']);
+    this.router.navigate(['/produtos']);
   }
 }
