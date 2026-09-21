@@ -6,18 +6,25 @@
       <a class="navbar-brand text-white" href="/produtos">
         Studium Personalizar
       </a>
-
-      <form class="search-form">
-        <div class="search-input-wrapper">
-          <input
-            type="search"
-            class="form-control rounded-pill"
-            placeholder="Buscar"
-            aria-label="Search"
-          />
-        <button class="clear-btn" type="button">✕</button>
-        </div>
-      </form>
+      
+<form class="search-form" (ngSubmit)="pesquisar()">
+  <div class="search-input-wrapper">
+    <input
+      type="search"
+      class="form-control rounded-pill"
+      placeholder="Buscar"
+      aria-label="Buscar"
+      [(ngModel)]="busca"
+      name="busca"
+    />
+    <button
+      class="clear-btn"
+      type="button"
+      (click)="limparBusca()">
+      ✕
+    </button>
+  </div>
+</form>
 
       <div class="user-links">
         <a href="#" class="nav-link text-white">Visto</a>

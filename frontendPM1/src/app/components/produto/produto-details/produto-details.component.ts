@@ -59,18 +59,24 @@ export class ProdutoDetailsComponent implements OnInit {
   }
 
   comprar(): void {
-    Swal.fire({
-      title: 'Compra',
-      text: 'Produto selecionado para compra!',
-      icon: 'success',
-      confirmButtonText: 'OK'
-    });
+    const numero = '5545998331309';
+    const total = this.produto.preco * this.quantidade;
+
+    const mensagem =
+      `Olá! Gostaria de fazer um pedido:%0A%0A` +
+      `Produto: ${this.produto.nome}%0A` +
+      `Quantidade: ${this.quantidade}%0A` +
+      `Preço unitário: R$ ${this.produto.preco.toFixed(2)}%0A` +
+      `Total: R$ ${total.toFixed(2)}%0A%0A` +
+      `Gostaria de continuar o atendimento.`;
+
+    window.open(`https://wa.me/${numero}?text=${mensagem}`, '_blank');
   }
 
   adicionarCarrinho(): void {
     Swal.fire({
       title: 'Carrinho',
-      text: 'Produto adicionado ao carrinho!',
+      text: `${this.produto.nome} foi adicionado ao carrinho!`,
       icon: 'success',
       confirmButtonText: 'OK'
     });

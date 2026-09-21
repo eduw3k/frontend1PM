@@ -7,13 +7,19 @@ import { Produtos } from '../models/produtos';
   providedIn: 'root'
 })
 export class ProdutoService {
-
   private apiUrl = 'http://localhost:8081/produtos';
 
   constructor(private http: HttpClient) {}
 
   listar(): Observable<Produtos[]> {
     return this.http.get<any[]>(this.apiUrl).pipe(
+      map(produtos => produtos.map(produto => this.converterProduto(produto))),
+      catchError(this.tratarErro)
+    );
+  }
+
+  buscarPorNome(nome: string): Observable<Produtos[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/buscarpornome?nome=${nome}`).pipe(
       map(produtos => produtos.map(produto => this.converterProduto(produto))),
       catchError(this.tratarErro)
     );
@@ -45,7 +51,7 @@ export class ProdutoService {
     };
 
     return this.http.post<any>(this.apiUrl, produtoRequest).pipe(
-      map(produtoCriado => this.converterProduto(produtoCriado)),
+      map(produto => this.converterProduto(produto)),
       catchError(this.tratarErro)
     );
   }
@@ -69,7 +75,7 @@ export class ProdutoService {
     };
 
     return this.http.put<any>(`${this.apiUrl}/${produto.id}`, produtoRequest).pipe(
-      map(produtoAtualizado => this.converterProduto(produtoAtualizado)),
+      map(produto => this.converterProduto(produto)),
       catchError(this.tratarErro)
     );
   }

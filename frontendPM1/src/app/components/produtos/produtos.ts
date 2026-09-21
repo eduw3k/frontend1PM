@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 import { Produtos as ProdutoModel } from '../../models/produtos';
 import { ProdutoService } from '../../services/produto.service';
@@ -12,16 +12,24 @@ import { ProdutoService } from '../../services/produto.service';
   styleUrl: './produtos.scss',
 })
 export class Produtos implements OnInit {
-
   produtos: ProdutoModel[] = [];
 
   constructor(
     private produtoService: ProdutoService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.listar();
+    this.route.queryParams.subscribe(params => {
+      const busca = params['busca'];
+
+      if (busca) {
+        this.buscar(busca);
+      } else {
+        this.listar();
+      }
+    });
   }
 
   listar(): void {
@@ -31,6 +39,17 @@ export class Produtos implements OnInit {
       },
       error: (erro) => {
         console.error('Erro ao listar produtos:', erro);
+      }
+    });
+  }
+
+  buscar(nome: string): void {
+    this.produtoService.buscarPorNome(nome).subscribe({
+      next: (produtos) => {
+        this.produtos = produtos;
+      },
+      error: (erro) => {
+        console.error('Erro ao buscar produtos:', erro);
       }
     });
   }
