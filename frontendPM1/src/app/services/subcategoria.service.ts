@@ -15,4 +15,25 @@ export class SubcategoriaService {
   listar(): Observable<Subcategoria[]> {
     return this.http.get<Subcategoria[]>(this.API);
   }
+
+  criar(subcategoria: Subcategoria): Observable<Subcategoria> {
+    return this.http.post<Subcategoria>(this.API, {
+      nome: subcategoria.nome,
+      categoriaId: subcategoria.categoriaId
+    });
+  }
+
+  editar(subcategoria: Subcategoria): Observable<Subcategoria> {
+    return this.http.put<Subcategoria>(
+      `${this.API}/${subcategoria.id}`,
+      {
+        nome: subcategoria.nome,
+        categoriaId: subcategoria.categoriaId
+      }
+    );
+  }
+
+  excluir(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.API}/${id}`);
+  }
 }

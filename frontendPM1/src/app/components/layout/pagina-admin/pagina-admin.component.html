@@ -57,6 +57,175 @@
     </table>
   </div>
 
+  <hr class="my-5">
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+  <div>
+    <h3>Categorias</h3>
+    <p>Gerenciamento de categorias</p>
+  </div>
+
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="abrirModalCategoria()">
+
+    + Nova Categoria
+
+  </button>
+
+</div>
+
+<div class="table-responsive">
+
+  <table class="table table-bordered table-hover">
+
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      @for (categoria of categorias; track categoria.id) {
+
+        <tr>
+
+          <td>
+            {{ categoria.id }}
+          </td>
+
+          <td>
+            {{ categoria.nome }}
+          </td>
+
+          <td>
+
+            <button
+              type="button"
+              class="btn btn-sm btn-primary me-2"
+              (click)="editarCategoria(categoria)">
+
+              Editar
+
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              (click)="excluirCategoria(categoria.id)">
+
+              Excluir
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      }
+
+    </tbody>
+
+  </table>
+
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-3 mt-5">
+
+  <div>
+    <h3>Subcategorias</h3>
+    <p>Gerenciamento de subcategorias</p>
+  </div>
+
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="abrirModalSubcategoria()">
+
+    + Nova Subcategoria
+
+  </button>
+
+</div>
+
+<div class="table-responsive">
+
+  <table class="table table-bordered table-hover">
+
+    <thead>
+
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Categoria</th>
+        <th>Ações</th>
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      @for (subcategoria of subcategorias; track subcategoria.id) {
+
+        <tr>
+
+          <td>
+            {{ subcategoria.id }}
+          </td>
+
+          <td>
+            {{ subcategoria.nome }}
+          </td>
+
+          <td>
+
+            @for (categoria of categorias; track categoria.id) {
+
+              @if (categoria.id === subcategoria.categoriaId) {
+                {{ categoria.nome }}
+              }
+
+            }
+
+          </td>
+
+          <td>
+
+            <button
+              type="button"
+              class="btn btn-sm btn-primary me-2"
+              (click)="editarSubcategoria(subcategoria)">
+
+              Editar
+
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              (click)="excluirSubcategoria(subcategoria.id)">
+
+              Excluir
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      }
+
+    </tbody>
+
+  </table>
+
+</div>
+
   @if (mostrarModal && produtoSelecionado) {
 
     <div class="modal-fundo">
@@ -313,5 +482,325 @@
     </div>
 
   }
+
+  @if (mostrarModalCategoria) {
+
+  <div class="modal-fundo">
+
+    <div class="modal-caixa">
+
+      <div class="modal-cabecalho">
+
+        <h4>Nova Categoria</h4>
+
+        <button
+          type="button"
+          class="btn-fechar"
+          (click)="cancelarCategoria()">
+
+          &times;
+
+        </button>
+
+      </div>
+
+      <div class="modal-corpo">
+
+        <div class="mb-3">
+
+          <label class="form-label">
+            Nome
+          </label>
+
+          <input
+            type="text"
+            class="form-control"
+            name="nomeCategoria"
+            [(ngModel)]="novaCategoria.nome"
+            placeholder="Ex: Cozinha">
+
+        </div>
+
+      </div>
+
+      <div class="modal-rodape">
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancelarCategoria()">
+
+          Cancelar
+
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="adicionarCategoria()">
+
+          Criar
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
+
+@if (mostrarModalSubcategoria) {
+
+  <div class="modal-fundo">
+
+    <div class="modal-caixa">
+
+      <div class="modal-cabecalho">
+
+        <h4>Nova Subcategoria</h4>
+
+        <button
+          type="button"
+          class="btn-fechar"
+          (click)="cancelarSubcategoria()">
+
+          &times;
+
+        </button>
+
+      </div>
+
+      <div class="modal-corpo">
+
+        <div class="mb-3">
+
+          <label class="form-label">
+            Nome
+          </label>
+
+          <input
+            type="text"
+            class="form-control"
+            name="nomeSubcategoria"
+            [(ngModel)]="novaSubcategoria.nome"
+            placeholder="Ex: Xícaras">
+
+        </div>
+
+        <div class="mb-3">
+
+          <label class="form-label">
+            Categoria
+          </label>
+
+          <select
+            class="form-select"
+            name="categoriaSubcategoria"
+            [(ngModel)]="novaSubcategoria.categoriaId">
+
+            <option [ngValue]="0">
+              Selecione uma categoria
+            </option>
+
+            @for (categoria of categorias; track categoria.id) {
+
+              <option [ngValue]="categoria.id">
+
+                {{ categoria.nome }}
+
+              </option>
+
+            }
+
+          </select>
+
+        </div>
+
+      </div>
+
+      <div class="modal-rodape">
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancelarSubcategoria()">
+
+          Cancelar
+
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="adicionarSubcategoria()">
+
+          Criar
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
+
+@if (mostrarModalEditarCategoria && categoriaSelecionada) {
+
+  <div class="modal-fundo">
+
+    <div class="modal-caixa">
+
+      <div class="modal-cabecalho">
+
+        <h4>Editar Categoria</h4>
+
+        <button
+          type="button"
+          class="btn-fechar"
+          (click)="cancelarEdicaoCategoria()">
+
+          &times;
+
+        </button>
+
+      </div>
+
+      <div class="modal-corpo">
+
+        <label class="form-label">
+          Nome
+        </label>
+
+        <input
+          type="text"
+          class="form-control"
+          name="editarCategoria"
+          [(ngModel)]="categoriaSelecionada.nome">
+
+      </div>
+
+      <div class="modal-rodape">
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancelarEdicaoCategoria()">
+
+          Cancelar
+
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="salvarCategoria()">
+
+          Salvar
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
+
+@if (mostrarModalEditarSubcategoria && subcategoriaSelecionada) {
+
+  <div class="modal-fundo">
+
+    <div class="modal-caixa">
+
+      <div class="modal-cabecalho">
+
+        <h4>Editar Subcategoria</h4>
+
+        <button
+          type="button"
+          class="btn-fechar"
+          (click)="cancelarEdicaoSubcategoria()">
+
+          &times;
+
+        </button>
+
+      </div>
+
+      <div class="modal-corpo">
+
+        <div class="mb-3">
+
+          <label class="form-label">
+            Nome
+          </label>
+
+          <input
+            type="text"
+            class="form-control"
+            name="editarSubcategoria"
+            [(ngModel)]="subcategoriaSelecionada.nome">
+
+        </div>
+
+        <div class="mb-3">
+
+          <label class="form-label">
+            Categoria
+          </label>
+
+          <select
+            class="form-select"
+            name="editarCategoriaSubcategoria"
+            [(ngModel)]="subcategoriaSelecionada.categoriaId">
+
+            @for (categoria of categorias; track categoria.id) {
+
+              <option [ngValue]="categoria.id">
+
+                {{ categoria.nome }}
+
+              </option>
+
+            }
+
+          </select>
+
+        </div>
+
+      </div>
+
+      <div class="modal-rodape">
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancelarEdicaoSubcategoria()">
+
+          Cancelar
+
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="salvarSubcategoria()">
+
+          Salvar
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
 
 </div>
