@@ -5,21 +5,16 @@ import { Produtos } from './components/produtos/produtos';
 import { PaginaCategoriasComponent } from './components/layout/pagina-categorias/pagina-categorias.component';
 import { ProdutoDetailsComponent } from './components/produto/produto-details/produto-details.component';
 import { PaginaAdmin } from './components/layout/pagina-admin/pagina-admin.component';
+import { CarrinhoComponent } from './components/layout/carrinho/carrinho.component';
 
 export const routes: Routes = [
-
   {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
   },
-
   {
     path: 'login',
-
-
-
-    
     component: LoginComponent
   },
   {
@@ -38,21 +33,18 @@ export const routes: Routes = [
         path: 'produtos/categoria/:categoriaId',
         component: PaginaCategoriasComponent
       },
-
       {
         path: 'produtos/subcategoria/:subcategoriaId',
         component: PaginaCategoriasComponent
+      },
+      {
+        path: 'carrinho',
+        component: CarrinhoComponent
       },
       {
         path: 'admin',
         component: PaginaAdmin
       }
     ]
-  },
-
-  // {
-  //   path: '**',
-  //   redirectTo: 'login'
-  // }
-
+  }
 ];
