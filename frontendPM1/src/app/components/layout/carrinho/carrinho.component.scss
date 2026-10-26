@@ -1,0 +1,50 @@
+.carrinho-vazio {
+  padding: 30px 0;
+  text-align: center;
+}
+
+.item-carrinho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.item-info p {
+  margin-bottom: 5px;
+}
+
+.item-acoes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.carrinho-total {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.carrinho-botoes {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+@media (max-width: 600px) {
+  .item-carrinho {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .item-acoes {
+    flex-wrap: wrap;
+  }
+
+  .carrinho-botoes {
+    flex-direction: column;
+  }
+}

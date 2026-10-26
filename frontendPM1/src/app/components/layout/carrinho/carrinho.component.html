@@ -1,0 +1,82 @@
+<div class="container mt-4 mb-5">
+  <h2 class="mb-4">Meu carrinho</h2>
+
+  @if (itens.length === 0) {
+    <div class="carrinho-vazio">
+      <p>Seu carrinho está vazio.</p>
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="continuarComprando()">
+        Ver produtos
+      </button>
+    </div>
+  } @else {
+    @for (item of itens; track item.produto.id) {
+      <div class="item-carrinho">
+        <div class="item-info">
+          <h5>{{ item.produto.nome }}</h5>
+
+          <p>
+            Preço unitário:
+            {{ item.produto.preco | currency:'BRL':'symbol':'1.2-2' }}
+          </p>
+
+          <p>
+            Subtotal:
+            {{ item.produto.preco * item.quantidade | currency:'BRL':'symbol':'1.2-2' }}
+          </p>
+        </div>
+
+        <div class="item-acoes">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="alterarQuantidade(item, item.quantidade - 1)">
+            −
+          </button>
+
+          <span>{{ item.quantidade }}</span>
+
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="alterarQuantidade(item, item.quantidade + 1)">
+            +
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            (click)="remover(item.produto.id)">
+            Excluir
+          </button>
+        </div>
+      </div>
+    }
+
+    <div class="carrinho-total">
+      <h4>
+        Total estimado:
+        {{ total | currency:'BRL':'symbol':'1.2-2' }}
+      </h4>
+    </div>
+
+    <div class="carrinho-botoes">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="continuarComprando()">
+        Continuar comprando
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-success"
+        (click)="comprarPeloWhatsApp()">
+        Continuar pelo WhatsApp
+      </button>
+    </div>
+  }
+</div>
