@@ -1,44 +1,49 @@
-<!-- Navbar Desktop -->
 <nav class="navbar custom-navbar">
   <div class="navbar-container">
-    
+
     <div class="navbar-top-row">
-      <a class="navbar-brand text-white" href="/produtos">
+      <a class="navbar-brand text-white" routerLink="/produtos">
         Studium Personalizar
       </a>
-      
-<form class="search-form" (ngSubmit)="pesquisar()">
-  <div class="search-input-wrapper">
-    <input
-      type="search"
-      class="form-control rounded-pill"
-      placeholder="Buscar"
-      aria-label="Buscar"
-      [(ngModel)]="busca"
-      name="busca"
-    />
-    <button
-      class="clear-btn"
-      type="button"
-      (click)="limparBusca()">
-      ✕
-    </button>
-  </div>
-</form>
+
+      <form class="search-form" (ngSubmit)="pesquisar()">
+        <div class="search-input-wrapper">
+          <input
+            type="search"
+            class="form-control rounded-pill"
+            placeholder="Buscar"
+            aria-label="Buscar"
+            [(ngModel)]="busca"
+            name="busca"
+          />
+
+          <button
+            class="clear-btn"
+            type="button"
+            (click)="limparBusca()">
+            ✕
+          </button>
+        </div>
+      </form>
 
       <div class="user-links">
-        <a href="#" class="nav-link text-white">Visto</a>
-        <a href="#" class="nav-link text-white">Carrinho</a>
+        <a
+          routerLink="/carrinho"
+          class="nav-link text-white">
+          Carrinho
+        </a>
 
         <div class="account-dropdown">
-          <button type="button" class="nav-link text-white account-button">
+          <button
+            type="button"
+            class="nav-link text-white account-button">
             Conta
           </button>
 
           <div class="account-menu">
-            <a routerLink="/admin">
-              Área do administrador
-            </a>
+           <button type="button" (click)="solicitarSenhaAdmin()">
+           Área do administrador
+           </button>
 
             <button type="button" (click)="sair()">
               Sair
@@ -52,65 +57,50 @@
       <div class="categories-bg-wrapper">
         <ul class="categories-nav">
           <li class="nav-item">
-
-            
-            <a class="nav-link text-white active" href="/produtos">Início</a> 
+            <a
+              class="nav-link text-white active"
+              routerLink="/produtos">
+              Início
+            </a>
           </li>
-                <!-- CATEGORIAS -->
-          <li class="nav-item has-dropdown">
 
+          <li class="nav-item has-dropdown">
             <a class="nav-link text-white">
               Categorias
             </a>
 
             <div class="dropdown-menu-box">
-
               <div class="dropdown-container">
-
                 @for (categoria of categorias; track categoria.id) {
-
                   <div class="dropdown-column">
-
-                    <a class="column-title active" [routerLink]="['/produtos/categoria', categoria.id]">
+                    <a
+                      class="column-title active"
+                      [routerLink]="['/produtos/categoria', categoria.id]">
                       {{ categoria.nome }}
                     </a>
 
                     <ul class="subcategories-list">
-
                       @for (
                         subcategoria of getSubcategorias(categoria.id);
                         track subcategoria.id
                       ) {
-
                         <li>
-                          <!-- ----------------------NESCESSARIO IMPLEMENTAR---------------------- -->
-                          <a class="nav-link active" [routerLink]="['/produtos/subcategoria', subcategoria.id]"> 
+                          <a
+                            class="nav-link active"
+                            [routerLink]="[
+                              '/produtos/subcategoria',
+                              subcategoria.id
+                            ]">
                             {{ subcategoria.nome }}
                           </a>
                         </li>
-
                       }
-
                     </ul>
-
                   </div>
-
                 }
-
               </div>
-
             </div>
-
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link text-white" href="#">Admin</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="#">Opção4</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="#">Opção5</a>
-          </li> -->
         </ul>
       </div>
     </div>
