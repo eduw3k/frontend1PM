@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { CategoriaService } from '../../../services/categoria.service';
 import { Categoria } from '../../../models/categoria';
@@ -14,7 +13,7 @@ import { SubcategoriaService } from '../../../services/subcategoria.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   categorias: Categoria[] = [];
   subcategorias: Subcategoria[] = [];
   busca = '';
@@ -52,7 +51,7 @@ export class NavbarComponent {
     });
   }
 
-   getSubcategorias(categoriaId: number): Subcategoria[] {
+  getSubcategorias(categoriaId: number): Subcategoria[] {
     return this.subcategorias.filter(
       subcategoria => subcategoria.categoriaId === categoriaId
     );
@@ -76,4 +75,18 @@ export class NavbarComponent {
   sair(): void {
     this.router.navigate(['/login']);
   }
+
+  solicitarSenhaAdmin(): void {
+  const senha = prompt('Digite a senha do administrador:');
+
+  if (senha === null) {
+    return;
+  }
+
+  if (senha === '1234') {
+    this.router.navigate(['/admin']);
+  } else {
+    alert('Senha incorreta. Acesso negado.');
+  }
+}
 }
