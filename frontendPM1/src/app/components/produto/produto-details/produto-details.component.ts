@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 import { Produtos } from '../../../models/produtos';
 import { ProdutoService } from '../../../services/produto.service';
+import { CarrinhoService } from '../../../services/carrinho.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,25 +15,16 @@ import Swal from 'sweetalert2';
   styleUrl: './produto-details.component.scss'
 })
 export class ProdutoDetailsComponent implements OnInit {
+
   produto: Produtos = new Produtos(
-    0,
-    '',
-    '',
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    ''
+    0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, ''
   );
 
   quantidade = 1;
 
   constructor(
     private produtoService: ProdutoService,
+    private carrinhoService: CarrinhoService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -47,6 +39,7 @@ export class ProdutoDetailsComponent implements OnInit {
         },
         error: (erro) => {
           console.error('Erro ao buscar produto:', erro);
+
           Swal.fire({
             title: 'Erro!',
             text: 'Não foi possível carregar o produto.',
@@ -63,17 +56,25 @@ export class ProdutoDetailsComponent implements OnInit {
     const total = this.produto.preco * this.quantidade;
 
     const mensagem =
-      `Olá! Gostaria de fazer um pedido:%0A%0A` +
-      `Produto: ${this.produto.nome}%0A` +
-      `Quantidade: ${this.quantidade}%0A` +
-      `Preço unitário: R$ ${this.produto.preco.toFixed(2)}%0A` +
-      `Total: R$ ${total.toFixed(2)}%0A%0A` +
+      `Olá! Gostaria de fazer um pedido:\n\n` +
+      `Produto: ${this.produto.nome}\n` +
+      `Quantidade: ${this.quantidade}\n` +
+      `Preço unitário: R$ ${this.produto.preco.toFixed(2)}\n` +
+      `Total: R$ ${total.toFixed(2)}\n\n` +
       `Gostaria de continuar o atendimento.`;
 
-    window.open(`https://wa.me/${numero}?text=${mensagem}`, '_blank');
+    window.open(
+      `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`,
+      '_blank'
+    );
   }
 
   adicionarCarrinho(): void {
+    this.carrinhoService.adicionar(
+      this.produto,
+      this.quantidade
+    );
+
     Swal.fire({
       title: 'Carrinho',
       text: `${this.produto.nome} foi adicionado ao carrinho!`,
